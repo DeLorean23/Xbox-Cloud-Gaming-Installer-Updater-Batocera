@@ -6,9 +6,20 @@ This installer adds **Xbox Cloud Gaming** to Batocera as its own system. Every c
 
 It runs on the open-source Xbox streaming client **Greenlight** (https://github.com/unknownskl/greenlight). The installer always downloads the newest Greenlight release from GitHub.
 
+## Two versions: German or English
+
+The installer itself always talks English. The two versions only differ in the **language of the game list**:
+
+| Version | Game list | Installer in Ports |
+|---|---|---|
+| **Xbox Cloud Gaming Installer & Updater (English).zip** | **English**: game names, descriptions and covers from the **US store** | Xbox Cloud Gaming Installer & Updater (English) |
+| **Xbox Cloud Gaming Installer & Updater (German).zip** | **German**: game names, descriptions and covers from the **German store** | Xbox Cloud Gaming Installer & Updater |
+
+Install only **one** of them. Both use the same system "Xbox Cloud Gaming". To switch the language, run the other installer: it rebuilds the game list in its language (with its own cover folder) and you can delete the old installer from Ports.
+
 ## Download
 
-Get **Xbox Cloud Gaming Installer & Updater.zip** from the **[Releases](https://github.com/DeLorean23/Xbox-Cloud-Gaming-Installer-Updater-Batocera/releases/latest)** page.
+Get the ZIP of your language from the **[Releases](https://github.com/DeLorean23/Xbox-Cloud-Gaming-Installer-Updater-Batocera/releases/latest)** page.
 
 ## Requirements
 
@@ -20,11 +31,11 @@ Get **Xbox Cloud Gaming Installer & Updater.zip** from the **[Releases](https://
 ## Installation
 
 1. Extract the contents of the ZIP archive to `/userdata`. This places the installer and its cover image in `/userdata/roms/ports/`.
-2. In Batocera, refresh the game list and launch **Xbox Cloud Gaming Installer & Updater** from **Ports**.
+2. In Batocera, refresh the game list and launch **Xbox Cloud Gaming Installer & Updater (English)** (or the German version) from **Ports**.
 3. Read the warning and confirm with **y** or **A** on your controller.
 4. The installer downloads the newest Greenlight build, sets up the system and builds the game list. Progress bars show what it is doing:
    - Step 1/3: list of all cloud games
-   - Step 2/3: names and details (German store)
+   - Step 2/3: names and details (English version: US store, German version: German store)
    - Step 3/3: covers
 5. It asks "Sign in now?". Press **y / A**, Xbox Cloud Gaming opens in a window. Sign in with your Microsoft account (keyboard). When the start page appears, close the window with **Hotkey + Start** or **Alt + F4**.
 6. At the end it asks "Reboot now?". Press **y / A** to restart Batocera. After the reboot the new system **Xbox Cloud Gaming** is in the system list.
@@ -33,10 +44,10 @@ You can skip the sign in and do it later: **F1 → Applications → Xbox Cloud G
 
 ## How it works
 
-- The game list comes from the **public Xbox Game Pass catalog** (`catalog.gamepass.com`), market Germany, German names. No sign in is needed for the list.
+- The game list comes from the **public Xbox Game Pass catalog** (`catalog.gamepass.com`): English version market USA with English names, German version market Germany with German names. No sign in is needed for the list.
 - Only games you can play with Game Pass are added. Titles that are only playable when you own them are left out.
 - For every game the installer creates a small file `/userdata/roms/xboxcloud/<Name>.xcloud`. It contains only the xCloud title id of the game.
-- Covers are saved in `/userdata/roms/xboxcloud/images/`, names, descriptions, publisher and genre in `gamelist.xml`.
+- Covers are saved in `/userdata/roms/xboxcloud/images-en/` (English) or `/userdata/roms/xboxcloud/images/` (German), names, descriptions, publisher and genre in `gamelist.xml`.
 - When you start a game, Batocera runs `/userdata/system/xboxcloud/launch.sh`. It reads the title id and starts Greenlight in fullscreen with `--connect=xcloud_<id>`, so the stream starts right away.
 - **Hotkey + Start** (Select + Start, or Guide + Start) closes the stream and brings you back to the game list.
 
@@ -62,14 +73,15 @@ Simply launch the installer again from **Ports**:
 
 - This is an unofficial system. A future Batocera update may affect it.
 - Greenlight is an unofficial client and not made by Microsoft. Cloud gaming may change at any time on Microsoft's side.
-- The game list uses German names and the German store. Names of a few games may stay in English.
+- English version: the list comes from the US store. A few games of the US list may not be playable in your country, and your Game Pass region decides what you can actually play.
+- German version: the list uses German names and the German store. Names of a few games may stay in English.
 - This project does not provide any games or accounts. You need your own Game Pass Ultimate subscription.
 - Xbox and Game Pass are trademarks of Microsoft. This project is not affiliated with Microsoft.
 - Log files for troubleshooting: `/userdata/system/logs/xboxcloud-installer.log` and `/userdata/system/logs/xboxcloud.log`
 
 ## Building
 
-`./build.sh` creates the ZIP in `dist/` from `src/installer.template.sh`, the helper scripts in `src/` and the images in `assets/`.
+`./build.sh` creates both ZIPs (English and German) in `dist/` from `src/installer.template.sh`, the helper scripts in `src/` and the images in `assets/`.
 
 ## License
 
